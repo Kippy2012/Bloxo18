@@ -126,17 +126,15 @@
       return;
     }
 
-    // Simulate saving user to localStorage
-    const userData = {
-      username: username,
-      password: password,
+    // ✅ Store full user info in localStorage
+    localStorage.setItem("blox18_user", JSON.stringify({
+      username,
+      password,
       gender: selectedGender,
       robux: 100
-    };
+    }));
 
-    localStorage.setItem("blox18_user", JSON.stringify(userData));
-
-    // Redirect to home page
+    // Redirect to home
     window.location.href = "home.html";
   }
 </script>
