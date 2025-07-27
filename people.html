@@ -104,7 +104,9 @@
     const userListEl = document.getElementById("userList");
     const users = JSON.parse(localStorage.getItem("blox18_users") || "{}");
 
-    Object.values(users).forEach(user => {
+    Object.keys(users).forEach(username => {
+      const user = users[username];
+
       const card = document.createElement("div");
       card.className = "user-card";
 
@@ -112,17 +114,18 @@
       avatar.className = "avatar";
       avatar.textContent = user.gender === "male" ? "👦" : "👧";
 
-      const username = document.createElement("div");
-      username.className = "username";
-      username.textContent = user.username;
+      const usernameEl = document.createElement("div");
+      usernameEl.className = "username";
+      usernameEl.textContent = user.username;
 
       const robux = document.createElement("div");
       robux.className = "robux";
       robux.textContent = `Robux: ${user.robux}`;
 
       card.appendChild(avatar);
-      card.appendChild(username);
+      card.appendChild(usernameEl);
       card.appendChild(robux);
+
       userListEl.appendChild(card);
     });
   </script>
