@@ -2,113 +2,49 @@
 <html>
 <head>
   <title>Games – Bloxo 18</title>
-  <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap" rel="stylesheet">
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      background-color: #57aaff;
-      font-family: Arial, sans-serif;
-      color: white;
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDHXHXizmJRqYPGIrf0Qmrqn2DleLNEAHk",
+      authDomain: "bloxo18.firebaseapp.com",
+      projectId: "bloxo18",
+      storageBucket: "bloxo18.firebasestorage.app",
+      messagingSenderId: "456343718982",
+      appId: "1:456343718982:web:ed250a6353f927dcd7ce47",
+      measurementId: "G-VDTW2W3PP9"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    async function loadGames() {
+      const querySnapshot = await getDocs(collection(db, "games"));
+      const container = document.getElementById("games");
+
+      querySnapshot.forEach((doc) => {
+        const game = doc.data();
+
+        const div = document.createElement("div");
+        div.style.border = "1px solid #ccc";
+        div.style.padding = "10px";
+        div.style.margin = "10px";
+        div.innerHTML = `
+          <h3>${game.title}</h3>
+          <p>By ${game.creator}</p>
+          <img src="${game.image}" alt="${game.title}" width="200"><br>
+          <a href="${game.rbxlFile}" download="${game.rbxlName}">Download .rbxl</a>
+        `;
+        container.appendChild(div);
+      });
     }
 
-    .header {
-      text-align: center;
-      padding: 30px 0 10px;
-    }
-
-    .logo {
-      font-family: 'Luckiest Guy', cursive;
-      font-size: 70px;
-      text-shadow: -3px -3px 0 red, 3px -3px 0 red, -3px 3px 0 red, 3px 3px 0 red;
-    }
-
-    .games-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 30px;
-      padding: 40px;
-    }
-
-    .game-card {
-      background: white;
-      border-radius: 10px;
-      color: black;
-      padding: 10px;
-      text-align: center;
-    }
-
-    .game-card img {
-      width: 100%;
-      height: 150px;
-      object-fit: cover;
-      border-radius: 6px;
-    }
-
-    .logout {
-      display: block;
-      margin: 20px auto 40px;
-      background: red;
-      color: white;
-      padding: 10px 20px;
-      border: none;
-      font-size: 16px;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-  </style>
+    window.addEventListener("DOMContentLoaded", loadGames);
+  </script>
 </head>
 <body>
-
-  <div class="header">
-    <div class="logo">Bloxo 18</div>
-    <div id="welcome">Welcome!</div>
-  </div>
-
-  <div class="games-grid" id="games">
-    <!-- Games will appear here -->
-  </div>
-
-  <button class="logout" onclick="logout()">Logout</button>
-
-  <script>
-    try {
-      const userRaw = localStorage.getItem("blox18_user");
-      if (!userRaw) throw new Error("No user found");
-
-      const user = JSON.parse(userRaw);
-      if (!user.username) throw new Error("Incomplete user data");
-
-      document.getElementById("welcome").textContent = `Welcome, ${user.username}!`;
-
-      const container = document.getElementById("games");
-      const games = JSON.parse(localStorage.getItem("blox18_games") || "[]");
-
-      if (games.length === 0) {
-        container.innerHTML = "<p>No games have been published yet.</p>";
-      } else {
-        games.forEach(game => {
-          const div = document.createElement("div");
-          div.className = "game-card";
-          div.innerHTML = `
-            <img src="${game.image}" alt="${game.title}">
-            <h3>${game.title}</h3>
-            <p>by ${game.creator}</p>
-          `;
-          container.appendChild(div);
-        });
-      }
-
-    } catch (e) {
-      alert("You must be logged in!");
-      window.location.href = "login.html";
-    }
-
-    function logout() {
-      localStorage.removeItem("blox18_user");
-      window.location.href = "login.html";
-    }
-  </script>
-
+  <h1>Games</h1>
+  <div id="games"></div>
 </body>
 </html>
