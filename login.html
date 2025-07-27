@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login – Bloxo 18</title>
+  <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #57aaff;
+      font-family: Arial, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    .container {
+      display: flex;
+      align-items: center;
+      gap: 60px;
+    }
+
+    .logo {
+      font-family: 'Luckiest Guy', cursive;
+      font-size: 80px;
+      color: white;
+      text-shadow:
+        -3px -3px 0 red,
+         3px -3px 0 red,
+        -3px  3px 0 red,
+         3px  3px 0 red;
+    }
+
+    .form-box {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    input {
+      padding: 15px;
+      font-size: 20px;
+      border: none;
+      outline: none;
+      width: 250px;
+    }
+
+    .login-btn {
+      background-color: white;
+      font-size: 24px;
+      padding: 10px;
+      cursor: pointer;
+      border: none;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="logo">Bloxo 18</div>
+
+  <div class="form-box">
+    <input type="text" id="username" placeholder="Username">
+    <input type="password" id="password" placeholder="Password">
+    <button class="login-btn" onclick="login()">Login</button>
+  </div>
+</div>
+
+<script>
+  async function login() {
+    const username = document.getElementById("username").value.trim();
+    const password = document.getElementById("password").value.trim();
+
+    if (!username || !password) {
+      alert("Please enter both fields.");
+      return;
+    }
+
+    const res = await fetch("https://your-backend-url/api/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ username, password })
+    });
+
+    const data = await res.json();
+    if (data.success) {
+      alert("Welcome, " + data.user.username + "!");
+      localStorage.setItem("user", JSON.stringify(data.user));
+      window.location.href = "home.html";
+    } else {
+      alert(data.error || "Login failed");
+    }
+  }
+</script>
+
+</body>
+</html>
