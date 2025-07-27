@@ -29,17 +29,18 @@
       padding: 20px;
       border-radius: 10px;
       width: 300px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
     }
 
     input {
       width: 100%;
-      margin-bottom: 15px;
       padding: 10px;
       font-size: 16px;
     }
 
     button {
-      width: 100%;
       padding: 10px;
       font-size: 16px;
       background: green;
@@ -69,6 +70,7 @@
   <form id="gameForm">
     <input type="text" id="title" placeholder="Game Title" required>
     <input type="text" id="image" placeholder="Image URL" required>
+    <input type="file" id="rbxlFile" accept=".rbxl" required>
     <button type="submit">Publish</button>
   </form>
 
@@ -81,18 +83,27 @@
       const user = JSON.parse(userRaw);
 
       const form = document.getElementById("gameForm");
-      form.onsubmit = (e) => {
+      form.onsubmit = async (e) => {
         e.preventDefault();
 
         const title = document.getElementById("title").value.trim();
         const image = document.getElementById("image").value.trim();
+        const fileInput = document.getElementById("rbxlFile");
+        const file = fileInput.files[0];
 
-        if (!title || !image) return alert("Fill out all fields!");
+        if (!title || !image || !file) {
+          alert("Please fill in all fields and upload a .rbxl file!");
+          return;
+        }
+
+        const fileURL = URL.createObjectURL(file);
 
         const newGame = {
           title,
           image,
-          creator: user.username
+          creator: user.username,
+          rbxl: fileURL,
+          rbxlName: file.name
         };
 
         const games = JSON.parse(localStorage.getItem("blox18_games") || "[]");
