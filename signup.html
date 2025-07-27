@@ -126,15 +126,30 @@
       return;
     }
 
-    // ✅ Store full user info in localStorage
-    localStorage.setItem("blox18_user", JSON.stringify({
+    // 🔁 Load existing users or start fresh
+    const users = JSON.parse(localStorage.getItem("blox18_users") || "{}");
+
+    // ❌ Username already exists
+    if (users[username]) {
+      alert("Username already exists. Please choose another one.");
+      return;
+    }
+
+    // ✅ Add new user to the users list
+    users[username] = {
       username,
       password,
       gender: selectedGender,
       robux: 100
-    }));
+    };
 
-    // Redirect to home
+    // 💾 Save all users back to storage
+    localStorage.setItem("blox18_users", JSON.stringify(users));
+
+    // 👤 Save the current user session separately
+    localStorage.setItem("blox18_user", JSON.stringify(users[username]));
+
+    // ➡ Redirect to home
     window.location.href = "home.html";
   }
 </script>
