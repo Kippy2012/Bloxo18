@@ -133,10 +133,15 @@
 
     const data = await res.json();
     if (data.success) {
-      alert("Account created!");
-      window.location.href = "login.html";
+      // Save to localStorage and redirect to home
+      localStorage.setItem("user", JSON.stringify({
+        username,
+        robux: 100,
+        gender: selectedGender
+      }));
+      window.location.href = "home.html";
     } else {
-      alert(data.error);
+      alert(data.error || "Signup failed");
     }
   }
 </script>
