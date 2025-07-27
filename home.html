@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Home – Bloxo 18</title>
+  <title>Home – Blox 18</title>
   <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap" rel="stylesheet">
   <style>
     body {
@@ -72,7 +72,7 @@
 </head>
 <body>
 
-  <div class="logo">Bloxo 18</div>
+  <div class="logo">BLŌX 18</div>
   <div class="welcome" id="welcome">Welcome!</div>
   <div class="robux" id="robux">Robux: 0</div>
 
@@ -87,15 +87,22 @@
 
   <button class="logout" onclick="logout()">Log Out</button>
 
+  <!-- ✅ Added script as requested -->
   <script>
-    const user = JSON.parse(localStorage.getItem("blox18_user"));
+    try {
+      const userRaw = localStorage.getItem("blox18_user");
 
-    if (!user) {
-      alert("You must be logged in!");
-      window.location.href = "login.html";
-    } else {
+      if (!userRaw) throw new Error("No user found");
+
+      const user = JSON.parse(userRaw);
+      if (!user.username || user.robux === undefined) throw new Error("Incomplete user data");
+
       document.getElementById("welcome").textContent = `Welcome, ${user.username}!`;
       document.getElementById("robux").textContent = `Robux: ${user.robux}`;
+
+    } catch (e) {
+      alert("You must be logged in!");
+      window.location.href = "login.html";
     }
 
     function logout() {
