@@ -53,6 +53,10 @@
       cursor: pointer;
       border: none;
     }
+
+    .login-btn:hover {
+      background-color: #ddd;
+    }
   </style>
 </head>
 <body>
@@ -63,34 +67,34 @@
   <div class="form-box">
     <input type="text" id="username" placeholder="Username">
     <input type="password" id="password" placeholder="Password">
-    <button class="login-btn" onclick="login()">Login</button>
+    <button class="login-btn" onclick="logIn()">Login</button>
   </div>
 </div>
 
 <script>
-  async function login() {
+  function logIn() {
     const username = document.getElementById("username").value.trim();
     const password = document.getElementById("password").value.trim();
 
     if (!username || !password) {
-      alert("Please enter both fields.");
+      alert("Please enter both username and password.");
       return;
     }
 
-    const res = await fetch("https://your-backend-url/api/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, password })
-    });
+    const users = JSON.parse(localStorage.getItem("blox18_users") || "{}");
 
-    const data = await res.json();
-    if (data.success) {
-      alert("Welcome, " + data.user.username + "!");
-      localStorage.setItem("user", JSON.stringify(data.user));
-      window.location.href = "home.html";
-    } else {
-      alert(data.error || "Login failed");
+    const user = users[username];
+
+    if (!user || user.password !== password) {
+      alert("Invalid username or password.");
+      return;
     }
+
+    // ✅ Login success — save session
+    localStorage.setItem("blox18_user", JSON.stringify(user));
+
+    // ➡ Redirect to home
+    window.location.href = "home.html";
   }
 </script>
 
