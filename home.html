@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Home – Bloxo 18</title>
+  <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #57aaff;
+      font-family: Arial, sans-serif;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .logo {
+      font-family: 'Luckiest Guy', cursive;
+      font-size: 80px;
+      color: white;
+      text-shadow:
+        -3px -3px 0 red,
+         3px -3px 0 red,
+        -3px  3px 0 red,
+         3px  3px 0 red;
+      margin-top: 40px;
+    }
+
+    .welcome {
+      margin: 30px 0 10px;
+      font-size: 32px;
+    }
+
+    .robux {
+      font-size: 20px;
+      margin-bottom: 40px;
+    }
+
+    .nav-buttons {
+      display: grid;
+      grid-template-columns: repeat(3, 140px);
+      gap: 20px;
+      text-align: center;
+    }
+
+    .btn {
+      background-color: white;
+      color: black;
+      font-size: 20px;
+      padding: 15px;
+      text-decoration: none;
+      border-radius: 8px;
+      transition: transform 0.2s;
+    }
+
+    .btn:hover {
+      transform: scale(1.05);
+    }
+
+    .logout {
+      margin-top: 40px;
+      font-size: 16px;
+      background: none;
+      border: 2px solid white;
+      color: white;
+      padding: 10px 20px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="logo">Bloxo 18</div>
+  <div class="welcome" id="welcome">Welcome!</div>
+  <div class="robux" id="robux">Robux: 0</div>
+
+  <div class="nav-buttons">
+    <a class="btn" href="games.html">Games</a>
+    <a class="btn" href="develop.html">Develop</a>
+    <a class="btn" href="catalog.html">Catalog</a>
+    <a class="btn" href="messages.html">Messages</a>
+    <a class="btn" href="friends.html">Friends</a>
+    <a class="btn" href="profile.html">Profile</a>
+  </div>
+
+  <button class="logout" onclick="logout()">Log Out</button>
+
+  <script>
+    // Check if user is logged in
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (!user) {
+      alert("You must be logged in!");
+      window.location.href = "login.html";
+    } else {
+      document.getElementById("welcome").textContent = `Welcome, ${user.username}!`;
+      document.getElementById("robux").textContent = `Robux: ${user.robux}`;
+    }
+
+    function logout() {
+      localStorage.removeItem("user");
+      window.location.href = "login.html";
+    }
+  </script>
+
+</body>
+</html>
