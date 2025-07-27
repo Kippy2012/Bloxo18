@@ -13,75 +13,77 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding-top: 50px;
+      justify-content: flex-start;
+      height: 100vh;
+      padding-top: 40px;
     }
 
     .logo {
       font-family: 'Luckiest Guy', cursive;
-      font-size: 80px;
-      color: white;
+      font-size: 70px;
       text-shadow:
         -3px -3px 0 red,
          3px -3px 0 red,
         -3px  3px 0 red,
          3px  3px 0 red;
+      margin-bottom: 10px;
     }
 
     .info {
-      margin-top: 20px;
       font-size: 24px;
+      margin: 10px 0;
     }
 
-    .buttons {
-      margin-top: 40px;
+    .nav {
+      margin-top: 30px;
       display: flex;
       gap: 20px;
     }
 
-    .btn {
-      background-color: white;
+    .nav a {
+      background: white;
       color: black;
-      padding: 12px 24px;
-      font-size: 20px;
-      border: none;
-      border-radius: 10px;
+      padding: 12px 20px;
       text-decoration: none;
-      cursor: pointer;
-      transition: background-color 0.2s;
+      font-size: 18px;
+      border-radius: 8px;
     }
 
-    .btn:hover {
-      background-color: #e0e0e0;
+    .nav a:hover {
+      background: #eee;
     }
 
     .logout {
-      margin-top: 60px;
-      font-size: 16px;
+      margin-top: 30px;
+      background: red;
       color: white;
+      padding: 10px 20px;
+      border: none;
+      font-size: 16px;
+      border-radius: 8px;
       cursor: pointer;
-      text-decoration: underline;
     }
   </style>
 </head>
 <body>
 
   <div class="logo">Bloxo 18</div>
-
-  <div class="info" id="welcome">Welcome, user!</div>
+  <div class="info" id="welcome">Welcome!</div>
   <div class="info" id="robux">Robux: 0</div>
 
-  <div class="buttons">
-    <a href="people.html" class="btn">👥 People</a>
-    <a href="games.html" class="btn">🎮 Games</a>
-    <a href="develop.html" class="btn">🛠️ Develop</a>
+  <div class="nav">
+    <a href="games.html">Games</a>
+    <a href="catalog.html">Catalog</a>
+    <a href="develop.html">Develop</a>
+    <a href="people.html">People</a>
+    <a href="messages.html">Messages</a>
   </div>
 
-  <div class="logout" onclick="logout()">Log out</div>
+  <button class="logout" onclick="logout()">Logout</button>
 
   <script>
     try {
       const userRaw = localStorage.getItem("blox18_user");
-
       if (!userRaw) throw new Error("No user found");
 
       const user = JSON.parse(userRaw);
