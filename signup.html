@@ -109,6 +109,7 @@
     selectedGender = gender;
     document.getElementById("maleBtn").classList.remove("selected");
     document.getElementById("femaleBtn").classList.remove("selected");
+
     if (gender === "male") {
       document.getElementById("maleBtn").classList.add("selected");
     } else {
@@ -116,33 +117,27 @@
     }
   }
 
-  async function signUp() {
+  function signUp() {
     const username = document.getElementById("username").value.trim();
     const password = document.getElementById("password").value.trim();
 
     if (!username || !password || !selectedGender) {
-      alert("Please fill all fields and select a gender.");
+      alert("Please fill in all fields and select a gender.");
       return;
     }
 
-    const res = await fetch("https://your-backend-url/api/signup", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, password, gender: selectedGender })
-    });
+    // Simulate saving user to localStorage
+    const userData = {
+      username: username,
+      password: password,
+      gender: selectedGender,
+      robux: 100
+    };
 
-    const data = await res.json();
-    if (data.success) {
-      // Save to localStorage and redirect to home
-      localStorage.setItem("user", JSON.stringify({
-        username,
-        robux: 100,
-        gender: selectedGender
-      }));
-      window.location.href = "home.html";
-    } else {
-      alert(data.error || "Signup failed");
-    }
+    localStorage.setItem("blox18_user", JSON.stringify(userData));
+
+    // Redirect to home page
+    window.location.href = "home.html";
   }
 </script>
 
