@@ -1,11 +1,60 @@
-<!-- index.html -->
 <!DOCTYPE html>
 <html>
 <head>
   <title>Bloxo 18</title>
+  <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      background-color: #57aaff; /* Bright blue */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      font-family: 'Arial', sans-serif;
+    }
+
+    .logo {
+      font-family: 'Luckiest Guy', cursive;
+      font-size: 80px;
+      color: white;
+      text-shadow:
+        -3px -3px 0 red,
+         3px -3px 0 red,
+        -3px  3px 0 red,
+         3px  3px 0 red;
+      margin-bottom: 60px;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 80px;
+    }
+
+    .btn {
+      font-size: 48px;
+      color: white;
+      background: none;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform 0.2s;
+    }
+
+    .btn:hover {
+      transform: scale(1.1);
+    }
+  </style>
 </head>
 <body>
-  <h1>Welcome to Bloxo 18!</h1>
-  <a href="signup.html">Sign Up</a> | <a href="login.html">Login</a>
+
+  <div class="logo">Bloxo 18</div>
+
+  <div class="buttons">
+    <a class="btn" href="signup.html">Sign Up</a>
+    <a class="btn" href="login.html">Login</a>
+  </div>
+
 </body>
 </html>
