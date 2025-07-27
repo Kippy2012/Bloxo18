@@ -38,7 +38,7 @@
       gap: 20px;
     }
 
-    input {
+    input, select {
       padding: 15px;
       font-size: 20px;
       border: none;
@@ -46,28 +46,7 @@
       width: 250px;
     }
 
-    .gender-box {
-      display: flex;
-      gap: 10px;
-    }
-
-    .gender-button {
-      width: 60px;
-      height: 60px;
-      border: none;
-      background-color: white;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      border-radius: 5px;
-    }
-
-    .gender-button.selected {
-      outline: 3px solid black;
-    }
-
-    .complete-btn {
+    .signup-btn {
       background-color: white;
       font-size: 24px;
       padding: 10px;
@@ -75,8 +54,8 @@
       border: none;
     }
 
-    .icon {
-      font-size: 28px;
+    .signup-btn:hover {
+      background-color: #ddd;
     }
   </style>
 </head>
@@ -88,68 +67,49 @@
   <div class="form-box">
     <input type="text" id="username" placeholder="Username">
     <input type="password" id="password" placeholder="Password">
-
-    <div class="gender-box">
-      <button class="gender-button" onclick="selectGender('male')" id="maleBtn">
-        <span class="icon" style="color: blue;">♂</span>
-      </button>
-      <button class="gender-button" onclick="selectGender('female')" id="femaleBtn">
-        <span class="icon" style="color: deeppink;">♀</span>
-      </button>
-    </div>
-
-    <button class="complete-btn" onclick="signUp()">Complete</button>
+    <select id="gender">
+      <option value="">Select Gender</option>
+      <option value="male">Boy</option>
+      <option value="female">Girl</option>
+    </select>
+    <button class="signup-btn" onclick="signUp()">Complete</button>
   </div>
 </div>
 
 <script>
-  let selectedGender = null;
-
-  function selectGender(gender) {
-    selectedGender = gender;
-    document.getElementById("maleBtn").classList.remove("selected");
-    document.getElementById("femaleBtn").classList.remove("selected");
-
-    if (gender === "male") {
-      document.getElementById("maleBtn").classList.add("selected");
-    } else {
-      document.getElementById("femaleBtn").classList.add("selected");
-    }
-  }
-
   function signUp() {
     const username = document.getElementById("username").value.trim();
     const password = document.getElementById("password").value.trim();
+    const selectedGender = document.getElementById("gender").value;
 
     if (!username || !password || !selectedGender) {
-      alert("Please fill in all fields and select a gender.");
+      alert("Please fill in all fields.");
       return;
     }
 
-    // 🔁 Load existing users or start fresh
+    // Get all users
     const users = JSON.parse(localStorage.getItem("blox18_users") || "{}");
 
-    // ❌ Username already exists
     if (users[username]) {
-      alert("Username already exists. Please choose another one.");
+      alert("Username already exists.");
       return;
     }
 
-    // ✅ Add new user to the users list
-    users[username] = {
+    const newUser = {
       username,
       password,
       gender: selectedGender,
       robux: 100
     };
 
-    // 💾 Save all users back to storage
+    // Save to user database
+    users[username] = newUser;
     localStorage.setItem("blox18_users", JSON.stringify(users));
 
-    // 👤 Save the current user session separately
-    localStorage.setItem("blox18_user", JSON.stringify(users[username]));
+    // Set active session
+    localStorage.setItem("blox18_user", JSON.stringify(newUser));
 
-    // ➡ Redirect to home
+    // Redirect to home
     window.location.href = "home.html";
   }
 </script>
